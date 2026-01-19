@@ -5,6 +5,7 @@
 
 #include <pins_arduino.h>
 
+#define USE_BOOST
 #ifdef BOARD_HAS_PSRAM
 #ifndef SERIAL_CMDS_TASK_STACK_SIZE
   #define SERIAL_CMDS_TASK_STACK_SIZE 8192

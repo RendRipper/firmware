@@ -52,7 +52,7 @@ void quickflashLEDx(uint8_t x);
 void delay_ten_us(uint16_t us);
 void quickflashLED(void);
 uint8_t read_bits(uint8_t count);
-#define MAX_WAIT_TIME 65535 // tens of us (ie: 655.350ms)
+#define MAX_WAIT_TIME 500 // tens of us (ie: 655.350ms)
 extern const IrCode *const NApowerCodes[];
 extern const IrCode *const EUpowerCodes[];
 uint8_t num_NAcodes = NUM_ELEM(NApowerCodes);
@@ -123,6 +123,7 @@ void StartTvBGone() {
 #endif
     checkIrTxPin();
     IRsend irsend(bruceConfigPins.irTx); // Set the GPIO to be used to sending the message.
+    irsend.setDutyCycle(75)
     irsend.begin();
     setup_ir_pin(bruceConfigPins.irTx, OUTPUT);
 
@@ -165,7 +166,7 @@ void StartTvBGone() {
             progressHandler(i, num_codes);
             irsend.sendRaw(rawData, (numpairs * 2), freq);
             bitsleft_r = 0;
-            delay_ten_us(20500);
+            delay_ten_us(500);
 
             // if user is pushing (holding down) TRIGGER button, stop transmission early
             if (check(SelPress)) // Pause TV-B-Gone
@@ -189,8 +190,8 @@ void StartTvBGone() {
         if (endingEarly == false) {
             displayTextLine("All codes sent!");
             // pause for ~1.3 sec, then flash the visible LED 8 times to indicate that we're done
-            delay_ten_us(MAX_WAIT_TIME); // wait 655.350ms
-            delay_ten_us(MAX_WAIT_TIME); // wait 655.350ms
+            // delay_ten_us(MAX_WAIT_TIME); // wait 655.350ms
+            // delay_ten_us(MAX_WAIT_TIME); // wait 655.350ms
         } else {
             displayRedStripe("User Stopped");
             delay(2000);

@@ -442,6 +442,7 @@ BLEAdvertisementData GetUniversalAdvertisementData(EBLEPayloadType Type) {
             uint8_t model = watch_models[random(26)].value;
             uint8_t Samsung_Data[15] = {
                 0x0F,
+                0x27
                 0xFF,
                 0x75,
                 0x00,
@@ -668,7 +669,7 @@ void aj_adv(int ble_choice) { // customSet defaults to false
     if (ble_choice == 6) { spamName = keyboard("", 10, "Name to spam"); }
     timer = millis();
     while (1) {
-        if (millis() - timer > 100) {
+        if (millis() - timer > 5) {
 
             switch (ble_choice) {
                 case 0: // Applejuice
